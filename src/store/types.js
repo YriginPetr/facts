@@ -17,3 +17,5 @@ export const FACTLOADING = "FACT/LOADING";
 export const OPENMENU = "OPENMENU";
 export const OPENMODAL = "OPENMODAL";
 export const NOTIFICATION = "NOTIFICATION";
+export const ERROR = "ERROR";
+export const RESTART = "RESTART";

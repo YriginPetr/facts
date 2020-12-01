@@ -5,6 +5,7 @@ import {
   LOADFACTS,
   NEXTFACT,
   OPENMENU,
+  RESTART,
   USERUPDATEINFO,
 } from "./types";
 
@@ -38,6 +39,9 @@ export const FactReducer = (state = InitStore, action) => {
     }
     case FACTSTART: {
       return { ...state, isEnd: false };
+    }
+    case RESTART: {
+      return InitStore;
     }
     default:
       return state;

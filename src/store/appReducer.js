@@ -9,6 +9,8 @@ import {
   WELCOMECOMPLETE,
   OPENMODAL,
   NOTIFICATION,
+  ERROR,
+  RESTART,
 } from "./types";
 
 const InitStore = {
@@ -21,6 +23,7 @@ const InitStore = {
   menuOpen: false,
   activeModal: null,
   notification: null,
+  error: false,
 };
 
 export const AppReducer = (store = InitStore, action) => {
@@ -46,6 +49,8 @@ export const AppReducer = (store = InitStore, action) => {
     case NOTIFICATION: {
       return { ...store, notification: action.payload };
     }
+    case ERROR:
+      return { ...store, error: action.payload, popout: action.payload };
     case USERUPDATEINFO: {
       if (action.payload.newUser) {
         return { ...store, newUser: true, welcomeCompleted: false };
@@ -54,6 +59,9 @@ export const AppReducer = (store = InitStore, action) => {
     }
     case WELCOMECOMPLETE: {
       return { ...store, welcomeCompleted: true };
+    }
+    case RESTART: {
+      return InitStore;
     }
     default:
       return store;

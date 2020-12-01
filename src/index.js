@@ -10,7 +10,7 @@ import { Provider } from "react-redux";
 import Rootreducer from "./store/reducer";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
-
+import "./eruda";
 const store = createStore(Rootreducer, applyMiddleware(thunk, logger));
 ReactDOM.render(
   <Provider store={store}>
@@ -18,6 +18,6 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
-if (process.env.NODE_ENV === "development") {
-  import("./eruda").then(({ default: eruda }) => {}); //runtime download
-}
+// if (process.env.NODE_ENV === "development") {
+//   import("./eruda").then(({ default: eruda }) => {}); //runtime download
+// }

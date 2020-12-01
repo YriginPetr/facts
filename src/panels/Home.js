@@ -8,13 +8,14 @@ import {
   Text,
   Button,
   PanelHeaderButton,
+  Placeholder,
 } from "@vkontakte/vkui";
 import {
   SwitchTransition,
   CSSTransition,
   TransitionGroup,
 } from "react-transition-group";
-
+import Icon56RecentOutline from "@vkontakte/icons/dist/56/recent_outline";
 import "./home.css";
 import Icon28PrivacyOutline from "@vkontakte/icons/dist/28/privacy_outline";
 import { connect } from "react-redux";
@@ -63,7 +64,7 @@ const Home = ({
       >
         facts
       </PanelHeader>
-      <div className="content" onClick={clickHandler}>
+      <div className="content">
         <TransitionGroup>
           <CSSTransition
             key={isEnd ? "isend" : welcomeCompleted ? currentIndex : "welcome"}
@@ -102,28 +103,31 @@ const Home = ({
                   display: "flex",
                   alignItems: "center",
                   flexDirection: "column",
+                  zIndex: 9,
                 }}
                 key={
                   isEnd ? "isend" : welcomeCompleted ? currentIndex : "welcome"
                 }
               >
-                <Title level="1" weight="medium">
-                  На этом все
-                </Title>
-                <Text weight="regular">
+                <Placeholder
+                  style={{ zIndex: 9 }}
+                  icon={<Icon56RecentOutline />}
+                  header=" На этом все"
+                  action={
+                    <Button
+                      mode="overlay_primary"
+                      size="xl"
+                      onClick={() => OpenModal("add")}
+                      stretched
+                      style={{ zIndex: 9 }}
+                    >
+                      Предложить факт
+                    </Button>
+                  }
+                >
                   Совсем скоро мы добавим новый факты
-                </Text>
+                </Placeholder>
 
-                <Div style={{ width: "100%" }}>
-                  <Button
-                    mode="overlay_primary"
-                    size="xl"
-                    onClick={() => OpenModal("add")}
-                    stretched
-                  >
-                    Предложить факт
-                  </Button>
-                </Div>
                 {/* <Div style={{ width: "100%" }}>
                   <Button size="xl" mode="overlay_secondary" stretched>
                     Начать заново
@@ -165,6 +169,7 @@ const Home = ({
         )}
       </div>
       {notification}
+      <div className="clickable_area" onClick={clickHandler}></div>
     </Panel>
   );
 };

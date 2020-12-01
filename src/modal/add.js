@@ -1,9 +1,16 @@
 import React from "react";
-import { FormLayout, Textarea, Button, File, Div } from "@vkontakte/vkui";
+import {
+  FormLayout,
+  Textarea,
+  Button,
+  File,
+  Div,
+  FormStatus,
+} from "@vkontakte/vkui";
 import { withModalRootContext } from "@vkontakte/vkui";
 import Icon24Dismiss from "@vkontakte/icons/dist/24/dismiss";
 import { useDispatch } from "react-redux";
-import { FactLoading, Notification, OpenModal } from "../store/actions";
+import { FactLoading, Notification, OpenModal, Error } from "../store/actions";
 import { APIURL } from "../store/const";
 const Addmodal = ({ updateModalHeight }) => {
   const [text, setText] = React.useState("");
@@ -22,21 +29,34 @@ const Addmodal = ({ updateModalHeight }) => {
     console.log(e.target.files[0]);
     updateModalHeight();
   };
-  const upload = async () => {
-    dispatch(FactLoading(true));
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("text", text);
-    await fetch(`${APIURL}/api/fact/addwithimage${window.location.search}`, {
-      method: "POST",
-      body: formData,
-    });
-    dispatch(FactLoading(false));
-    dispatch(OpenModal(null));
-    dispatch(Notification("Ваше предложение направлено на рассмотрение"));
+  const upload = async (e) => {
+    try {
+      e.preventDefault();
+      dispatch(FactLoading(true));
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("text", text);
+      await fetch(`${APIURL}/api/fact/addwithimage${window.location.search}`, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors",
+        cache: "no-cache",
+      });
+      dispatch(FactLoading(false));
+      dispatch(OpenModal(null));
+      dispatch(Notification("Ваше предложение направлено на рассмотрение"));
+    } catch (err) {
+      console.log(err);
+      dispatch(Error(true));
+    }
   };
   return (
     <FormLayout>
+      <FormStatus header="Все предложение проходят модерацию.">
+        В случае несоответствия контента правилам(скоро), ваше предложение может
+        быть отклонено. Для тестирования модерация выключена, т е факты сразу
+        попадают в ленту
+      </FormStatus>
       <Textarea
         value={text}
         onChange={TextChange}

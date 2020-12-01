@@ -103,3 +103,22 @@
   position: relative;
   width: fit-content;
 }
+.Placeholder__icon .Icon,
+.Placeholder__header,
+.Placeholder__text {
+  color: #fff !important;
+}
+.Placeholder__text {
+  opacity: 0.8;
+}
+.clickable_area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+}
+/* .content {
+  z-index: 1;
+} */
